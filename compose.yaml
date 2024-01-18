@@ -1,0 +1,25 @@
+services:
+  rustapp:
+    ports:
+      - "8080:8080"
+    container_name: rustapp
+    image: azizguennichi/rustapp:latest
+    build:
+      context: ./backend
+      dockerfile: rust.dockerfile
+      args:
+        DATABASE_URL: postgres://postgres:aziz@db:5432/postgres
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: aziz
+      POSTGRES_DB: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    
+volumes:
+  pgdata: {}
